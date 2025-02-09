@@ -344,6 +344,6 @@ const getImageOfTheDay = async (imgContainer) => {
 
   imgContainer.appendChild(descriptionContainer);
   imgContainer.appendChild(imgWrapper);
-   imgContainer.appendChild(copyright);
+  //  imgContainer.appendChild(copyright);
 };
 
