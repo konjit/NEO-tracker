@@ -1,66 +1,25 @@
 import {
   FOOTER_ID,
   HEADER_ID,
-  INTRO_CONTAINER,
-  TODAY_DATE_ID,
   CARD_CONTAINER_ID,
   DATE_CONTAINER_ID,
   BTN_CONTAINER_ID,
   NEO_SECTION_ID,
-  MAIN_ID,
   INFO_CONTAINER,
   VIS_SECTION_ID,
-  VIS_CONTAINER_ID,
+  TO_TOP_BTN_ID,
   IMG_CONTAINER,
   IMG_SECTION_ID,
+  END_DATE_ID,
+  START_DATE_ID,
 } from "./constants.js";
 
 import {
   createDateInput,
   createComboboxView,
   createDivElement,
+  createButtonElement,
 } from "./componentView.js";
-
-export const createFooterView = () => {
-  const element = document.createElement("footer");
-  element.id = FOOTER_ID;
-
-  const copyrightText = document.createElement("p");
-  copyrightText.textContent = "© 2025 All Rights Reserved.";
-  copyrightText.style.textAlign = "center";
-
-  element.appendChild(copyrightText);
-
-  return element;
-};
-
-const createWelcomeIntro = () => {
-  const container = document.createElement("div");
-  container.classList.add("welcome-container");
-
-  const heading = document.createElement("h1");
-  heading.innerText = "Welcome to NEO Tracker";
-  heading.classList.add("welcome-heading");
-
-  const introText = document.createElement("p");
-  introText.innerText =
-    "Explore near-Earth objects (NEOs) and learn more about asteroids passing by our planet. Stay informed with detailed data and visualizations.";
-  introText.classList.add("welcome-text");
-
-  container.appendChild(heading);
-  container.appendChild(introText);
-
-  return container;
-};
-
-export const createIntroView = () => {
-  const introView = createDivElement();
-  introView.id = INTRO_CONTAINER;
-  const intro = createWelcomeIntro();
-  introView.appendChild(intro);
-
-  return introView;
-};
 
 export const createNeoSectionView = () => {
   const neoSection = document.createElement("section");
@@ -69,10 +28,15 @@ export const createNeoSectionView = () => {
   const dateContainer = createDivElement();
   dateContainer.id = DATE_CONTAINER_ID;
   const dateEl = createDateInput();
-  dateEl.id = TODAY_DATE_ID;
+  dateEl.id = START_DATE_ID;
+
+  const dateEndEl = createDateInput();
+  dateEndEl.id = END_DATE_ID;
+
   const comboBox = createComboboxView();
 
   dateContainer.appendChild(dateEl);
+  dateContainer.appendChild(dateEndEl);
   dateContainer.appendChild(comboBox);
 
   neoSection.appendChild(dateContainer);
@@ -85,7 +49,7 @@ export const createNeoSectionView = () => {
   infoContainer.id = INFO_CONTAINER;
 
   const mainContainer = createDivElement();
-  mainContainer.id = MAIN_ID;
+  mainContainer.classList.add("neo-main-parent-container");
 
   mainContainer.appendChild(cardContainer);
   mainContainer.appendChild(infoContainer);
@@ -96,6 +60,19 @@ export const createNeoSectionView = () => {
   return neoSection;
 };
 
+export const createCardElement = () => {
+  const card = createDivElement();
+  card.classList.add("card");
+  const cardHeader = createDivElement();
+  cardHeader.classList.add("card-header");
+  const cardBody = createDivElement();
+  cardBody.classList.add("card-body");
+
+  card.appendChild(cardHeader);
+  card.appendChild(cardBody);
+
+  return card;
+};
 export const createHeaderView = () => {
   const element = document.createElement("header");
   element.id = HEADER_ID;
@@ -166,4 +143,25 @@ export const createVisualizationSectionView = () => {
   visContainer.style.height = "700px";
   visSection.appendChild(visContainer);
   return visSection;
+};
+
+export const topBtnView = () => {
+  const topBtn = createButtonElement();
+  topBtn.id = TO_TOP_BTN_ID;
+  topBtn.classList.add("btn");
+  topBtn.innerHTML = ' <i class="fas fa-arrow-up"></i>';
+
+  return topBtn;
+};
+
+export const createFooterView = () => {
+  const element = document.createElement("footer");
+  element.id = FOOTER_ID;
+
+  const copyrightText = document.createElement("p");
+  copyrightText.textContent = "© 2025 All Rights Reserved.";
+  copyrightText.style.textAlign = "center";
+
+  element.appendChild(copyrightText);
+  return element;
 };
