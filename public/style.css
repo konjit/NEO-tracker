@@ -31,7 +31,7 @@ html {
 }
 
 body {
-  background-image: url("/assets/bg.jpg");
+  background-image: url("/public/bg.jpg");
   display: flex;
   flex-direction: column;
 }
