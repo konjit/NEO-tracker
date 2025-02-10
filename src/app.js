@@ -1,4 +1,4 @@
-import { initPage, setUp, scrollFunction,  initDateRange } from "./uiPage.js";
+import { initPage, setUp, scrollFunction, initDateRange } from "./uiPage.js";
 
 const loadApp = () => {
   initPage();
@@ -8,4 +8,4 @@ const loadApp = () => {
 
 window.addEventListener("load", loadApp);
 
-window.onscroll =  () => scrollFunction();
+window.onscroll = () => scrollFunction();

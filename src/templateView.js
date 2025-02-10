@@ -21,6 +21,19 @@ import {
   createButtonElement,
 } from "./componentView.js";
 
+export const createFooterView = () => {
+  const element = document.createElement("footer");
+  element.id = FOOTER_ID;
+
+  const copyrightText = document.createElement("p");
+  copyrightText.textContent = "© 2025 All Rights Reserved.";
+  copyrightText.style.textAlign = "center";
+
+  element.appendChild(copyrightText);
+
+  return element;
+};
+
 export const createNeoSectionView = () => {
   const neoSection = document.createElement("section");
   neoSection.id = NEO_SECTION_ID;
@@ -152,16 +165,4 @@ export const topBtnView = () => {
   topBtn.innerHTML = ' <i class="fas fa-arrow-up"></i>';
 
   return topBtn;
-};
-
-export const createFooterView = () => {
-  const element = document.createElement("footer");
-  element.id = FOOTER_ID;
-
-  const copyrightText = document.createElement("p");
-  copyrightText.textContent = "© 2025 All Rights Reserved.";
-  copyrightText.style.textAlign = "center";
-
-  element.appendChild(copyrightText);
-  return element;
 };

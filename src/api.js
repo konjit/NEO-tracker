@@ -1,22 +1,21 @@
-/*                        API limitation: 
-** The NEO Feed API is set up to fetch data starting from the current date plus 
-** next 6 days.  That means it only gives access to users of the API for a week.
-** For example if today is: 10-02-2025 then data is avail to 17-02-2025. 
-**
-** If we want large data set of any date ranges we have to use browse API.
-** https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${API_KEY}`
-*/
-
+/*                        API limitation:
+ ** The NEO Feed API is set up to fetch data starting from the current date plus
+ ** next 6 days.  That means it only gives access to users of the API for a week.
+ ** For example if today is: 10-02-2025 then data is avail to 17-02-2025.
+ **
+ ** If we want large data set of any date ranges we have to use browse API.
+ ** https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${API_KEY}`
+ */
 
 import { API_KEY } from "../config.js";
 import { START_DATE_ID } from "./constants.js";
-import {isWithinRange} from './utils.js'
+import { isWithinRange } from "./utils.js";
 
 // The main function the fetch data from the specified END_POINT and returns JSON or BLOB objects
 // It handles network error  if for example the server is not reachable for the set timeout
-// And handles http error in case the END_POINT is not properly set.    
+// And handles http error in case the END_POINT is not properly set.
 
-// By default a fetch() request timeouts at the time indicated by the browser. 
+// By default a fetch() request timeouts at the time indicated by the browser.
 // In Chrome a network request timeouts at 300 seconds, while in Firefox at 90 seconds.
 
 const fetchData = async (END_POINT) => {
@@ -72,8 +71,10 @@ export const fetchDetailedNEOData = async (neoReferenceID) => {
 };
 
 export const browseNEOs = async (startDate, endDate) => {
-  const response = await fetch(`https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${API_KEY}`);
-  console.log(response)
+  const response = await fetch(
+    `https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${API_KEY}`
+  );
+  console.log(response);
 };
 
 // Fetch image of data from NASA img of the day
