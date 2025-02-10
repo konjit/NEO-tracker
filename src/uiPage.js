@@ -1,29 +1,47 @@
 import {
-  APP_ID, START_DATE_ID, END_DATE_ID, CARD_CONTAINER_ID,
-  CARDS_PER_PAGE, SCROLL_TH, BTN_CONTAINER_ID,
-  IMG_CONTAINER, SELECTOR_ID, INFO_CONTAINER,
+  APP_ID,
+  START_DATE_ID,
+  END_DATE_ID,
+  CARD_CONTAINER_ID,
+  CARDS_PER_PAGE,
+  SCROLL_TH,
+  BTN_CONTAINER_ID,
+  IMG_CONTAINER,
+  SELECTOR_ID,
+  INFO_CONTAINER,
   TO_TOP_BTN_ID,
+  IMG_DAY_ID,
 } from "./constants.js";
 
-import { 
-  createNeoSectionView, createHeaderView, createFooterView,
-  createVisualizationSectionView, createImgSectionView,
-  topBtnView, createCardElement,
+import {
+  createNeoSectionView,
+  createHeaderView,
+  createFooterView,
+  createVisualizationSectionView,
+  createImgSectionView,
+  topBtnView,
+  createCardElement,
 } from "./templateView.js";
 
 import { createButtonElement, createInputElement } from "./componentView.js";
 
 import {
-  filterNEOs, fetchImageOfTheDay, fetchDetailedNEOData,
-  fetchNEOs, filterDateRangeNEOs,
+  filterNEOs,
+  fetchImageOfTheDay,
+  fetchDetailedNEOData,
+  fetchNEOs,
+  filterDateRangeNEOs,
 } from "./api.js";
 
 import { getTodayDate, convertDateFormat } from "./utils.js";
 
-import { 
-  countPotentiallyHazardousAsteroids, sortNEOBySize,
-  potentiallyHazardousAsteroids, sortNEOByBrightness, getDiameter
- } from "./helper.js";
+import {
+  countPotentiallyHazardousAsteroids,
+  sortNEOBySize,
+  potentiallyHazardousAsteroids,
+  sortNEOByBrightness,
+  getDiameter,
+} from "./helper.js";
 
 export const initPage = () => {
   const appInterface = document.getElementById(APP_ID);
@@ -161,25 +179,26 @@ const createCardView = (currentNEOs, cardContainer) => {
 
 const createInfoView = async (neoReferenceID) => {
   const detailedNEOInfoCard = document.getElementById(INFO_CONTAINER);
-  detailedNEOInfoCard.innerHTML = "<div class='loading'>Loading...</div>";
-
+  detailedNEOInfoCard.innerHTML = `
+  <div class="loading-spinner">
+    <div class="spinner"></div>
+  </div>
+`;
   const neo = await fetchDetailedNEOData(neoReferenceID);
-
   if (neo.error) {
     detailedNEOInfoCard.innerHTML = `<div class="error-message">${neo.message}</div>`;
     return;
   }
-
-  getDetailedView(neo, detailedNEOInfoCard)
+  getDetailedView(neo, detailedNEOInfoCard);
 };
 
-export const getDetailedView = (neo, detailedNEOInfoCard)=>{
+export const getDetailedView = (neo, detailedNEOInfoCard) => {
   const approachDate = neo.close_approach_data[0].close_approach_date;
   const brightness = neo.absolute_magnitude_h;
-  const diameter = getDiameter(neo)
+  const diameter = getDiameter(neo);
 
   const isHazardous = neo.is_potentially_hazardous_asteroid ? "Yes" : "No";
-  const orbitalData = neo.orbital_data ? getOrbitalData(neo): "";
+  const orbitalData = neo.orbital_data ? getOrbitalData(neo) : "";
 
   detailedNEOInfoCard.innerHTML = `
     <div class="neo-info-card">
@@ -208,9 +227,8 @@ export const getDetailedView = (neo, detailedNEOInfoCard)=>{
       </div>
     </div>
   `;
-}
+};
 export const getOrbitalData = (neo) => {
-
   const orbitalDateDiscoverd = neo.orbital_data.orbit_determination_date;
   const orbitPerihelionDist = Number(
     neo.orbital_data.perihelion_distance
@@ -235,9 +253,9 @@ export const getOrbitalData = (neo) => {
           <span class="tip-info">The time it takes for the asteroid to complete one full orbit around the Sun.</span>
       </p>
     </div>
-  `
-    return orbitalData;
-}
+  `;
+  return orbitalData;
+};
 export const setupEventListener = () => {
   const imgContainer = document.getElementById(IMG_CONTAINER);
   getImageOfTheDay(imgContainer);
@@ -297,7 +315,6 @@ export const setUp = async () => {
     cardContainer.innerHTML = `<h1 class='error-heading'>${todayNEOs.message}</h1>`;
   }
 
- 
   const existingH3 = document.querySelector(".neo-general-info");
   if (existingH3) {
     existingH3.remove();
@@ -317,7 +334,6 @@ export const initDateRange = () => {
   document.getElementById(START_DATE_ID).value = getTodayDate();
   document.getElementById(END_DATE_ID).value = getTodayDate();
 };
-
 
 // Image of the day functions
 const getImageOfTheDay = async (imgContainer) => {
@@ -346,6 +362,7 @@ const getImageOfTheDay = async (imgContainer) => {
   imgWrapper.classList.add("image-wrapper");
 
   const img = document.createElement("img");
+  img.id = IMG_DAY_ID;
   img.src = imgData.hdurl;
   img.alt = imgData.title;
   img.classList.add("image-of-the-day");
@@ -403,6 +420,7 @@ const dateEventHandler = () => {
     <span class="count">${todayNEOs.length}</span> near-Earth objects (NEOs) flying by. 
      `;
       document.querySelector(".neo-main-parent-container").prepend(h3);
+
       displayNEOs(todayNEOs);
     } catch (error) {
       console.error("Error fetching NEOs:", error);
@@ -410,15 +428,25 @@ const dateEventHandler = () => {
   };
 
   const checkAndHandleDates = () => {
-    if (startSet || endSet) handleDateInput();  
+    if (startSet || endSet) handleDateInput();
   };
 
   startDate.addEventListener("change", () => {
+    cardContainer.innerHTML = `
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+  `;
     startSet = true;
     checkAndHandleDates();
   });
 
   endDate.addEventListener("change", () => {
+    cardContainer.innerHTML = `
+    <div class="loading-spinner">
+      <div class="spinner"></div>
+    </div>
+  `;
     endSet = true;
     checkAndHandleDates();
   });
