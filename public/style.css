@@ -1,6 +1,7 @@
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400&display=swap');
 :root {
   --nav-hover-color: rgba(142, 196, 71, 0.8);
-  --bg-container-color: rgba(76, 113, 126, 0.3);
+  --bg-color: rgba(76, 113, 126, 0.3);
   --default-border-size: 0.5rem;
   --border-color: rgba(76, 113, 126, 0.4);
   --bg-hover-color: rgba(76, 113, 126, 0.4);
@@ -16,6 +17,7 @@
   --default-line-height: 1.5;
   --accent-color: rgb(129, 185, 55);
   --danger-color: rgb(173, 48, 48);
+  --bg-alt-color: #000;
 }
 
 * {
@@ -31,7 +33,7 @@ html {
 }
 
 body {
-  background-image: url("/public/bg.jpg");
+  background-image: url("./bg.jpg");
   display: flex;
   flex-direction: column;
 }
@@ -82,7 +84,7 @@ body {
   padding: 1rem;
   letter-spacing: var(--default-letter-spacing);
   text-align: center;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   border-radius: var(--default-border-size);
 }
 
@@ -100,7 +102,7 @@ body {
   text-align: center;
   padding: 1rem;
   max-width: 40rem;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   border-radius: 1rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
   color: var(--text-color);
@@ -231,7 +233,7 @@ body {
   height: 4rem;
   width: 100%;
   margin-bottom: 4rem;
-  background-color: black;
+  background-color: var(--bg-alt-color);
 }
 
 .navbar {
@@ -240,7 +242,7 @@ body {
   align-items: center;
   padding: 2rem 15rem;
   height: 4rem;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-alt-color);
 }
 
 .navbar-brand {
@@ -292,8 +294,8 @@ body {
 }
 
 .btn {
-  background-color: var(--bg-container-color);
-  border-color: var(--bg-container-color);
+  background-color: var(--bg-color);
+  border-color: var(--bg-color);
   color: var(--heading-text-color);
   letter-spacing: var(--default-letter-spacing);
   padding: 1rem 1rem;
@@ -312,7 +314,7 @@ body {
   right: 2.5rem;
   z-index: 99;
   cursor: pointer;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   font-size: 1em;
   color: var(--heading-text-color);
 }
@@ -373,7 +375,7 @@ body {
   margin: 4rem auto;
   margin-top: 6rem;
   transition: all 0.3s ease;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   border-radius: 1rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
   width: 70%;
@@ -398,7 +400,7 @@ body {
 
 option {
   padding: 0.5rem;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   color: var(--text-color);
   border: none;
   border-radius: var(--default-border-size);
@@ -420,7 +422,7 @@ option:hover {
 /* Sections */
 #vis-section {
   margin-bottom: 1rem;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
 }
 
 /* Welcome info container */
@@ -442,7 +444,7 @@ option:hover {
 /* Image Styling  */
 #date-container {
   display: flex;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   border-radius: var(--default-border-size);
   justify-content: space-between;
   margin-bottom: 2rem;
@@ -468,7 +470,7 @@ img {
 /* Image of the day style */
 .description-container {
   padding: 1rem;
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   border-radius: 8px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   margin-bottom: 1rem;
@@ -531,7 +533,7 @@ img {
 
 /* Footer */
 #footer {
-  background-color: var(--bg-container-color);
+  background-color: var(--bg-color);
   height: 4rem;
   color: var(--heading-text-color);
   display: flex;
