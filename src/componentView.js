@@ -1,4 +1,4 @@
-import { FOOTER_ID, SELECTOR_ID } from "./constants.js";
+import { FOOTER_ID, SELECTOR_ID, SEARCH_INPUT_ID } from "./constants.js";
 
 export const createDateInput = () => {
   const element = document.createElement("input");
@@ -15,8 +15,8 @@ export const createComboboxView = () => {
 
   const options = [
     { value: "size", text: "Sort By Size" },
-    { value: "brightness", text: "Sort By Magnitude" },
-    { value: "velocity", text: "Sort By Velocity" },
+    { value: "brightness", text: "Sort By Intensity" },
+
   ];
   options.forEach((option) => {
     const optionEl = document.createElement("option");
@@ -31,16 +31,15 @@ export const createComboboxView = () => {
 export const createInputContainer = () => {
   const container = document.createElement('div');
   container.classList.add('input-container');
-
   const dateInput = createDateInput();
   const combobox = createComboboxView();
 
+  container.appendChild(heading);
   container.appendChild(dateInput);
   container.appendChild(combobox);
 
   return container;
 };
-
 
 
 
@@ -51,16 +50,22 @@ export const createFormElement = () => {
 };
 export const createDivElement = () => {
   const element = document.createElement("div");
-  element.classList.add("container");
+ 
   return element;
 };
 
-
+export const createHeadingElement = ( ) => {
+  const element = document.createElement("h3");
+  element.classList.add("neo-general-info");
+  return element;
+}
 export const createInputElement = () => {
   const container = document.createElement('div');
   container.classList.add('input-container');
 
+
   const input = document.createElement('input');
+  input.id = SEARCH_INPUT_ID;
   input.type = 'text';
   input.placeholder = 'Search...';
   input.classList.add('input-element');

@@ -1,11 +1,21 @@
 :root {
-  --nav-text-color: rgb(252, 104, 51);
+  --nav-hover-color: rgba(142, 196, 71, 0.8);
   --bg-container-color: rgba(76, 113, 126, 0.3);
   --default-border-size: 0.5rem;
-  --hover-color: rgb(115, 157, 172);
+  --border-color: rgba(76, 113, 126, 0.4);
+  --bg-hover-color: rgba(76, 113, 126, 0.4);
+  --brand-hover-color: rgba(194, 199, 122, 0.9);
   --text-color: #fff;
   --input-bg-color: rgb(106, 146, 161);
-  --card-selected-color: rgb(250, 156, 122, 0.5);
+  --card-selected-color: rgba(194, 250, 122, 0.5);
+  --heading-text-color: rgb(95, 134, 148);
+  --heading-text-color: rgba(142, 196, 71, 1);
+  --error-text-color: rgb(228, 100, 100);
+  --default-font-weight: 800;
+  --default-letter-spacing: 1.5;
+  --default-line-height: 1.5;
+  --accent-color: rgb(129, 185, 55);
+  --danger-color: rgb(173, 48, 48);
 }
 
 * {
@@ -22,79 +32,72 @@ html {
 
 body {
   background-image: url("/assets/bg.jpg");
+  display: flex;
+  flex-direction: column;
 }
 
 #app {
-  margin: 0rem 15rem;
+  margin: 0rem 10rem;
   flex: 1;
+  transition: all 0.3s ease;
 }
 
-#main {
-  display: flex;
-  gap: 2rem;
-}
-
-/* Nav styling */
-#header {
-  position: sticky;
-  top: 0;
-  height: 60px;
+#neo-section {
   width: 100%;
-  margin-bottom: 2rem;
-  background-image: url("/assets/bg.jpg");
 }
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 2rem;
-  height: 60px;
-  background-color: var(--bg-container-color);
-}
-
-.navbar-brand {
-  color: white;
-  font-size: 1.5rem;
-  text-decoration: none;
-  text-transform: uppercase;
-}
-
-.navbar-links {
-  display: flex;
+/* Tha main container of asteroids */
+.neo-main-parent-container {
+  display: grid;
+  width: 100%;
+  grid-template-columns: 1.75fr 1.25fr;
   gap: 2rem;
-  justify-content: flex-end;
-  margin-left: auto;
+  transition: all 0.3s ease;
 }
-
-.navbar-link {
+/* This is the styling for general info when a user selects date range */
+.neos-info {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
   color: var(--text-color);
-  margin-left: 1rem;
-  text-decoration: none;
-  text-transform: uppercase;
-  font-size: 1rem;
-  transition: 0.7 ease-in;
-}
-
-.navbar-link:hover {
-  color: var(--nav-text-color);
-}
-
-.container {
   padding: 1rem;
+  border-radius: var(--default-border-size);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  line-height: 1.6;
+  width: 100%;
 }
 
-/* Card styling */
+.neos-info strong {
+  color: var(--accent-color);
+  font-size: 1.3rem;
+}
+
+.count {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--danger-color);
+}
+.neo-general-info {
+  grid-column: 1 / -1;
+  color: var(--text-color);
+  font-size: 1.2rem;
+  padding: 1rem;
+  letter-spacing: var(--default-letter-spacing);
+  text-align: center;
+  background-color: var(--bg-container-color);
+  border-radius: var(--default-border-size);
+}
+
+/* Grid of cards styling for the asteroids */
 #card-container {
-  width: 60%;
+  grid-column: 1 / 2;
   display: flex;
   flex-wrap: wrap;
-  gap: 2rem;
+  gap: 1.5rem;
   padding: 0;
   color: var(--text-color);
+  transition: all 0.3s ease;
 }
 .card {
   text-align: center;
-  margin: 1rem auto;
   padding: 1rem;
   max-width: 40rem;
   background-color: var(--bg-container-color);
@@ -109,9 +112,10 @@ body {
   font-size: 1.2rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
+
 .card-heading {
   font-size: 1.8rem;
-  color: rgb(76, 113, 126);
+  color: var(--heading-text-color);
   margin-bottom: 1rem;
 }
 
@@ -123,12 +127,13 @@ body {
 }
 
 .hazardous {
-  background-color:none;
+  background-color: none;
   border-radius: var(--default-border-size);
 }
 .card:hover {
   cursor: pointer;
   transform: scale(1.03);
+  background-color: var(--bg-hover-color);
 }
 .card:active {
   transform: scale(1);
@@ -141,61 +146,192 @@ body {
   color: var(--text-color);
 }
 
-#date-container {
-  display: flex;
-  background-color: var(--bg-container-color);
-  border-radius: var(--default-border-size);
-  justify-content: space-between;
-  margin: 1rem;
-  gap: 1rem;
+/* The style for the detailed info of each asteroid */
+#info-container {
+  grid-column: 2 / 3;
 }
-#img-container {
-  display: flex;
-  margin: 3rem 0rem;
-  flex-wrap: wrap;
-}
-#img-container h1 {
-  color: var(--text-color);
-  margin: 1rem 0rem;
-  font-size: 1.5rem;
-}
-#img-container p {
+/* Detailed NEO Info card */
+.loading {
+  text-align: center;
+  font-size: 20px;
   color: #fff;
-  font-size: 1.2rem;
-  line-height: 1.6rem;
-  margin: 1rem 0rem;
+  padding: 20px;
 }
-img {
-  flex: 1;
+.neo-info-card {
+  padding: 1rem;
+  max-height: 80rem;
+  min-width: 20rem;
+  background-color: var(--card-selected-color);
+  border-radius: var(--default-border-size);
+  color: var(--text-color);
+  font-size: 1.2rem;
+  line-height: 1rem;
+  color: #fff;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+}
+.neo-info-card.show {
+  display: block;
+  opacity: 1;
+}
+.neo-info-card h2 {
+  font-size: 2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.neo-info {
+  font-size: 1.1rem;
+}
+
+.neo-info p {
+  margin: 0.5rem 0;
+  font-size: 1.2rem;
+  line-height: 1.5rem;
+}
+
+.neo-info strong {
+  font-weight: bold;
+}
+.neo-general-info strong {
+  font-weight: bold;
+}
+
+.orbital-data {
+  margin-top: 2rem;
+  background-color: rgba(15, 64, 82, 0.3);
+  padding: 1rem;
+  border-radius: 0.8rem;
+}
+
+.orbital-data h3 {
+  font-size: 1.4rem;
+  margin-bottom: 1rem;
+}
+
+.view-more {
+  background-color: rgba(0, 0, 0, 0.6);
+  text-decoration: none;
+  padding: 0.5rem 1.5rem;
+  color: var(--text-color);
+  font-weight: bold;
+  margin-top: 1rem;
+  display: inline-block;
+  border-radius: var(--default-border-size);
+}
+
+.view-more:hover {
+  background-color: rgba(0, 0, 0, 0.4);
+}
+
+/* Nav styling */
+#header {
+  position: sticky;
+  top: 0;
+  height: 4rem;
+  width: 100%;
+  margin-bottom: 4rem;
+  background-color: black;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 15rem;
+  height: 4rem;
+  background-color: var(--bg-container-color);
+}
+
+.navbar-brand {
+  color: var(--heading-text-color);
+  letter-spacing: var(--default-letter-spacing);
+  font-weight: var(--default-font-weight);
+  font-size: 1.5rem;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+.navbar-links {
+  display: flex;
+  gap: 2rem;
+  justify-content: flex-end;
+  margin-left: auto;
+}
+
+.navbar-link:not(view-more) {
+  color: var(--text-color);
+  margin-left: 1rem;
+  font-weight: var(--default-font-weight);
+  text-decoration: none;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: var(--default-letter-spacing);
+  transition: 0.7 ease-in;
+}
+
+.navbar-link:hover {
+  color: var(--nav-hover-color);
 }
 
 #date {
   flex-grow: 1;
 }
+
 #selector {
   flex-grow: 1;
   border-radius: var(--default-border-size);
   color: var(--text-color);
 }
+
+/* Button styling */
 #btn-container {
   display: flex;
-  width: 58%;
   justify-content: space-between;
-  border-top-left-radius: 0rem;
-  border-top-right-radius: 0rem;
-  margin-top: 0rem;
+  margin-top: 1rem;
 }
 
 .btn {
   background-color: var(--bg-container-color);
   border-color: var(--bg-container-color);
-  color: #fff;
+  color: var(--heading-text-color);
+  letter-spacing: var(--default-letter-spacing);
   padding: 1rem 1rem;
   cursor: pointer;
+  text-transform: uppercase;
+  font-size: 1.1rem;
   border-radius: var(--default-border-size);
 }
 .btn:hover {
-  background-color: var(--hover-color);
+  background-color: var(--bg-hover-color);
+}
+#top {
+  display: none;
+  position: fixed;
+  bottom: 2rem;
+  right: 2.5rem;
+  z-index: 99;
+  cursor: pointer;
+  background-color: var(--bg-container-color);
+  font-size: 1em;
+  color: var(--heading-text-color);
+}
+
+#top:hover {
+  background-color: var(--bg-hover-color);
+}
+
+.navbar-menu-button {
+  display: none;
+  font-size: 2rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.btn.disabled {
+  cursor: not-allowed;
 }
 
 /* Date and text inputs styling */
@@ -230,15 +366,17 @@ img {
 .input-container {
   display: flex;
   justify-content: center;
+  flex-direction: column;
   align-items: center;
+  color: var(--text-color);
   gap: 1rem;
-  margin: 2rem auto;
-  padding: 1rem;
-  max-width: 40rem;
+  margin: 4rem auto;
+  margin-top: 6rem;
+  transition: all 0.3s ease;
   background-color: var(--bg-container-color);
   border-radius: 1rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
-  width: 90%;
+  width: 70%;
 }
 
 .input-element {
@@ -258,29 +396,25 @@ img {
   border-color: rgba(76, 113, 126, 1);
 }
 
-select.input-element {
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  appearance: none;
-  background-repeat: no-repeat;
-  background-position: right 0.5rem center;
-  background-size: 12px;
-  padding-right: 2rem;
-}
-
 option {
   padding: 0.5rem;
-  background-color: #fff;
-  color: rgba(76, 113, 126, 0.7);
+  background-color: var(--bg-container-color);
+  color: var(--text-color);
   border: none;
+  border-radius: var(--default-border-size);
 }
 
 option:hover {
-  background-color: rgba(76, 113, 126, 0.1);
+  background-color: var(--card-selected-color);
+}
+
+.input-element:hover {
+  background-color: var(--bg-hover-color);
 }
 /* Error handling style */
 .error-heading {
-  font-size: 2rem;
+  font-size: 1.5rem;
+  color: var(--error-text-color);
 }
 
 /* Sections */
@@ -293,20 +427,10 @@ option:hover {
 .welcome-container p {
   color: var(--text-color);
 }
-.welcome-container {
-  text-align: center;
-  margin: 2rem auto;
-  padding: 2rem;
-  max-width: 40rem;
-  background-color: var(--bg-container-color);
-  border-radius: 1rem;
-  box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.2);
-}
-
 .welcome-heading {
   font-size: 2rem;
-  color: rgb(76, 113, 126);
-  margin-bottom: 1rem;
+  color: var(--heading-text-color);
+  margin-top: 1rem;
 }
 
 .welcome-text {
@@ -315,82 +439,32 @@ option:hover {
   color: #333;
 }
 
-/* Detailed NEO Info card */
-#info-container p {
-  font-size: 1.2rem;
-  line-height: 1.5rem;
-}
-
-#info-container a {
-  background-color: var(--primary-color);
-  padding: 0.5rem 0.75rem;
-  color: var(--text-color);
-}
-.neo-info-card {
-  padding: 1rem;
-  max-height: 40rem;
-  background-color: var(--card-selected-color);
-  border-radius: var(--default-border-size);
-  color: var(--text-color);
-  font-size: 1.2rem;
-  line-height: 1rem;
-  color: #fff;
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
-}
-
-.neo-info-card h2 {
-  font-size: 2rem;
-  margin-bottom: 1.5rem;
-  text-align: center;
-}
-
-.neo-info {
-  font-size: 1.1rem;
-}
-
-.neo-info p {
-  margin: 0.5rem 0;
-}
-
-.neo-info strong {
-  font-weight: bold;
-}
-
-.orbital-data {
-  margin-top: 2rem;
-  background-color: rgba(15, 64, 82, 0.3);
-  padding: 1rem;
-  border-radius: 0.8rem;
-}
-
-.orbital-data h3 {
-  font-size: 1.4rem;
-  margin-bottom: 1rem;
-}
-
-.view-more {
-  background-color: rgba(23, 87, 110, 0.7);
-  text-decoration: none;
-  font-weight: bold;
-  margin-top: 1rem;
-  display: inline-block;
-}
-
-.view-more:hover {
-  text-decoration: underline;
-}
-/* Footer */
-#footer {
-  background-color: var(--bg-container-color);
-  height: 4rem;
-  color: var(--text-color);
+/* Image Styling  */
+#date-container {
   display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 2rem;
-  margin-bottom: 0rem;
+  background-color: var(--bg-container-color);
+  border-radius: var(--default-border-size);
+  justify-content: space-between;
+  margin-bottom: 2rem;
+  padding: 1rem;
+  gap: 1rem;
+  transition: all 0.3s ease;
+}
+#img-container {
+  display: flex;
+  margin: 3rem 0rem;
+  flex-wrap: wrap;
 }
 
+#img-container p {
+  color: #fff;
+  font-size: 1.2rem;
+  line-height: 1.6rem;
+  margin: 1rem 0rem;
+}
+img {
+  flex: 1;
+}
 /* Image of the day style */
 .description-container {
   padding: 1rem;
@@ -404,13 +478,13 @@ option:hover {
   font-size: 2rem;
   font-weight: bold;
   margin-bottom: 1rem;
-  color: var(--text-color);
+  color: var(--heading-text-color);
   text-align: center;
 }
 
 .image-explanation {
   font-size: 1rem;
-  line-height: 1.6;
+  line-height: var(--default-line-height);
   color: var(--text-color);
   text-align: justify;
 }
@@ -429,23 +503,119 @@ option:hover {
   height: auto;
   display: block;
 }
+/* Tooltip styling */
 
-.copyright-text {
-  font-size: 0.9rem;
-  color: var(--text-muted-color);
-  text-align: right;
-  margin: 1rem 0;
+.tip {
+  position: relative;
+  display: inline-block;
 }
 
-.navbar-menu-button {
-  display: none;
-  font-size: 2rem;
-  background: none;
-  border: none;
-  color: white;
-  cursor: pointer;
+.tip-info {
+  visibility: hidden;
+  width: 100%;
+  background-color: #000;
+  color: #fff;
+  text-align: center;
+  border-radius: var(--default-border-size);
+  padding: 0.5rem;
+  position: absolute;
+  z-index: 1;
+  bottom: 125%;
+  left: 50%;
+  margin-left: -60px;
 }
-@media (max-width: 768px) {
+
+.tip:hover .tip-info {
+  visibility: visible;
+}
+
+/* Footer */
+#footer {
+  background-color: var(--bg-container-color);
+  height: 4rem;
+  color: var(--heading-text-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.4rem;
+  margin-bottom: 0rem;
+  letter-spacing: var(--default-letter-spacing);
+}
+
+/* Media Queries */
+@media (min-width: 300px) and (max-width: 772px) {
+  #app {
+    margin: 0rem 1rem;
+  }
+  .navbar-menu-button {
+    display: block;
+  }
+  .navbar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    height: auto;
+    margin-bottom: 2rem;
+  }
+
+  .navbar-brand {
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  .navbar-links {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    max-height: 0;
+    overflow: hidden;
+  }
+
+  .navbar-link {
+    font-size: 0.9rem;
+    margin-left: 0;
+  }
+
+  #date-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+  }
+  #date-container > input {
+    width: 100%;
+  }
+  #date-container > select {
+    width: 100%;
+  }
+  #search-input {
+    width: 90%;
+  }
+  #info-container {
+    width: 100%;
+  }
+  .input-container {
+    margin: 0rem auto;
+    margin-bottom: 1rem;
+    width: 100%;
+  }
+  .neo-main-parent-container {
+    grid-template-columns: 1fr;
+  }
+
+  #info-container {
+    grid-column: 1 / -1;
+  }
+  .card-container {
+    grid-column: 1 / -1;
+  }
+  .neo-general-info {
+    grid-column: 1 / -1;
+  }
+}
+@media (min-width: 772px) and (max-width: 1199.98px) {
+  #app {
+    margin: 0rem 4rem;
+  }
   .navbar-menu-button {
     display: block;
   }
@@ -473,70 +643,21 @@ option:hover {
     font-size: 0.9rem;
     margin-left: 0;
   }
-
-  #app {
-    margin: 0rem 5rem;
-    flex: 1;
+  #info-container {
+    width: 100%;
+  }
+  #search-input {
+    width: 90%;
   }
 }
-
-/* Mobile view (480px and below) */
-@media (max-width: 480px) {
-  .navbar {
-    padding: 0.5rem;
-  }
-
-  .navbar-brand {
-    font-size: 1rem;
-  }
-
-  .navbar-link {
-    font-size: 0.8rem;
-  }
-  #app {
-    margin: 0rem 2rem;
-    flex: 1;
-  }
-}
-
-@media (max-width: 575.98px) {
-  #app {
-    margin: 0rem 0rem;
-    flex: 1;
-  }
-}
-
-@media (min-width: 576px) and (max-width: 767.98px) {
-  #app {
-    margin: 0rem 0rem;
-    flex: 1;
-  }
-}
-
-@media (min-width: 768px) and (max-width: 991.98px) {
-  #app {
-    margin: 0rem 1rem;
-    flex: 1;
-  }
-}
-
-@media (min-width: 992px) and (max-width: 1199.98px) {
-  #app {
-    margin: 0rem 6rem;
-    flex: 1;
-  }
-}
-
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   #app {
     margin: 0rem 10rem;
-    flex: 1;
   }
 }
 
 @media (min-width: 1400px) {
   #app {
     margin: 0rem 15rem;
-    flex: 1;
   }
 }
