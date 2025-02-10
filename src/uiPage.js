@@ -297,7 +297,7 @@ export const setUp = async () => {
     cardContainer.innerHTML = `<h1 class='error-heading'>${todayNEOs.message}</h1>`;
   }
 
-  console.log('has', potentiallyHazardousAsteroids(todayNEOs).length)
+ 
   const existingH3 = document.querySelector(".neo-general-info");
   if (existingH3) {
     existingH3.remove();
