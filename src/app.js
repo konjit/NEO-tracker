@@ -1,11 +1,15 @@
-import { initPage, setUp, scrollFunction, initDateRange } from "./uiPage.js";
+import {
+  initPage,
+  initAsteroidViews,
+  initDateRange,
+} from "./controller/uiPage.js";
 
+import { scrollFunction} from "./eventHandlers.js"
 const loadApp = () => {
   initPage();
   initDateRange();
-  setUp();
+  initAsteroidViews();
 };
 
 window.addEventListener("load", loadApp);
-
 window.onscroll = () => scrollFunction();
