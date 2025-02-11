@@ -154,7 +154,7 @@ export const createHeaderView = () => {
 
 export const createWelcomeMessage = (start, end, count, hazardous) => {
   return `
-      Between <strong>${start}</strong> and <strong>${end}</strong>, there are 
+      Between <strong>${end}</strong> and <strong>${start}</strong>, there are 
       <span class="count">${count}</span> asteroids flying by. 
       There could be in total <span class="count">${hazardous}</span> potentially hazardous asteroid(s).
       Use the search bar, the date picker and the options below to find specific asteroids 

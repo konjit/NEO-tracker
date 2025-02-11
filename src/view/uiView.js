@@ -18,6 +18,7 @@ export const createAsteroidCard = (currentNEOs, cardContainer) => {
           <div class="card-body">
           <p><strong>Approach Date:</strong> ${approachDate} </p></br>
           <p><strong>Size:</strong> ${getDiameter(neo)} m</p></br>
+          <p><strong>Intensity:</strong> ${neo.absolute_magnitude_h} m</p></br>
           <p><strong>Hazardous:</strong> ${isHazardous ? "Yes" : "No"}</p>
           </div>
         </div>
