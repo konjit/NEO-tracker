@@ -6,7 +6,7 @@ import {
   CARDS_PER_PAGE,
   BTN_CONTAINER_ID,
   IMG_DAY_ID,
-  INFO_CONTAINER
+  INFO_CONTAINER,
 } from "../constants.js";
 
 import {
@@ -29,21 +29,17 @@ import {
 
 import { getDateAfterDays, convertDateFormat } from "../utils.js";
 
-import {
-  countPotentiallyHazardousAsteroids,
-} from "../helpers/helper.js";
+import { countPotentiallyHazardousAsteroids } from "../helpers/helper.js";
 
 import {
   getAsteroids,
   setupEventListener,
   dateEventHandler,
   selectEventHandler,
+  showHideIntroSection,
 } from "../eventHandlers.js";
 
-import {
-  createAsteroidCard,
-  getDetailedComponent,
-} from "../view/uiView.js";
+import { createAsteroidCard, getDetailedComponent } from "../view/uiView.js";
 
 export const initPage = () => {
   const appInterface = document.getElementById(APP_ID);
@@ -74,7 +70,8 @@ export const initPage = () => {
   setupEventListener();
   dateEventHandler();
 
-  getAsteroids()
+  getAsteroids();
+ 
 };
 
 export const initWelcomeSection = async () => {
@@ -112,16 +109,15 @@ export const initWelcomeSection = async () => {
   document.getElementById(APP_ID).prepend(welcomeContainer);
 };
 
-
 export const initDateRange = () => {
   document.getElementById(START_DATE_ID).value = getDateAfterDays(0);
   document.getElementById(END_DATE_ID).value = getDateAfterDays(7);
 };
 
-/* Initialize the page with NEOs (asteroids) within a date range  
-** from today to 6 days ahead.  
-** Example: If today is 11-02-2025, it shows asteroids up to 18-02-2025.  
-*/
+/* Initialize the page with NEOs (asteroids) within a date range
+ ** from today to 6 days ahead.
+ ** Example: If today is 11-02-2025, it shows asteroids up to 18-02-2025.
+ */
 
 export const initAsteroidViews = async () => {
   const cardContainer = document.getElementById(CARD_CONTAINER_ID);
@@ -139,23 +135,23 @@ export const initAsteroidViews = async () => {
   if (existingH3) {
     existingH3.remove();
   }
-  
+
   displayNEOs(todayNEOs.reverse());
   displayDetailedInfo(todayNEOs[0].id);
- 
+
   cardContainer.children[0].classList.add("selected");
 };
 
 /* This is the card the shows the detailed of each asteroid when the
-** cards from this createAsteroidCard is clicked
-*/
+ ** cards from this createAsteroidCard is clicked
+ */
 
 export const displayDetailedInfo = async (neoReferenceID) => {
   const detailedNEOInfoCard = document.getElementById(INFO_CONTAINER);
   detailedNEOInfoCard.innerHTML = `
-                                    <div class="loading-spinner">
-                                      <div class="spinner"></div>
-                                    </div>
+                  <div class="loading-spinner">
+                    <div class="spinner"></div>
+                  </div>
                                   `;
   const neo = await fetchDetailedNEOData(neoReferenceID);
   if (neo.error) {
@@ -242,5 +238,3 @@ export const getImageOfTheDay = async (imgContainer) => {
   imgContainer.appendChild(descriptionContainer);
   imgContainer.appendChild(imgWrapper);
 };
-
-

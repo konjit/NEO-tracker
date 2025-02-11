@@ -42,11 +42,7 @@ export const sortNEOByBrightness = (asteroids) => {
 };
 
 export const sortNEOBySize = (asteroids) => {
-  asteroids.sort((asteroid1, asteroid2) => {
-    return getDiameter(asteroid1) - getDiameter(asteroid2);
-  });
-
-  return asteroids;
+  return [...asteroids].sort((a, b) => getDiameter(b) - getDiameter(a));
 };
 
 export const getDiameter = (neo) => {

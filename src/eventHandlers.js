@@ -185,3 +185,14 @@ export const getAsteroids = () => {
     }
   });
 };
+
+
+export const showHideIntroSection = () => {
+  const ele = document.querySelector('.welcome-heading');
+  
+  ele.addEventListener('click', function() {
+      const introPara = document.querySelector('.noes-info');
+      console.log(introPara);
+      introPara.classList.toggle('hidden');
+  });
+}
