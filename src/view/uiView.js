@@ -28,8 +28,11 @@ export const createAsteroidCard = (currentNEOs, cardContainer) => {
 };
 
 export const getDetailedComponent = (neo, detailedNEOInfoCard) => {
+
   const approachDate = neo.close_approach_data[0].close_approach_date;
   const brightness = neo.absolute_magnitude_h;
+  const velocity = Number(neo.close_approach_data[0].relative_velocity.kilometers_per_hour).toFixed(4);
+  const missDistance = Number(neo.close_approach_data[0].miss_distance.kilometers).toFixed(4);
   const diameter = getDiameter(neo);
 
   const isHazardous = neo.is_potentially_hazardous_asteroid ? "Yes" : "No";
@@ -47,6 +50,12 @@ export const getDetailedComponent = (neo, detailedNEOInfoCard) => {
           </p></br>
           <p class="tip"><strong>Brightness:</strong> ${brightness}
             <span class="tip-info">Asteroid's brightness if 1 AU from Earth and Sun. Lower values = brighter.</span>
+          </p></br>
+             <p class="tip"><strong>Velocity:</strong> ${velocity} km/hr
+            <span class="tip-info">The relative velocity of the asteroid as it approaches Earth, measured in km/h.</span>
+          </p></br>
+           <p class="tip"><strong>Miss Distance:</strong> ${missDistance} km
+            <span class="tip-info">Closest distance between the asteroid and Earth, measured in kilometers..</span>
           </p></br>
           <p class="tip"><strong>Diameter:</strong> ${diameter} meters    
           <span class="tip-info">The estimated size of the asteroid.</span>
