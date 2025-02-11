@@ -1,18 +1,15 @@
 # Near-Earth Object Tracker
 
-A web application in development the tracks near earth objects like asteroids using real-time data
-by using NEO API provided by NASA.
+A web application that tracks near-Earth objects (NEOs), such as asteroids, using real-time data from NASA's NEO API.
 
-## Features 
+## Features
 
--Display the NEOs based on selected date
--Show detailed info of each asteroid properties
--Display NASA's Image of the Day in process - WIP
--Filter  asteroids based on size, magnitude, and velocity - WIP
-
-
+- Display NEOs based on selected date ranges
+- Show detailed asteroid information, including orbital data
+- Sort asteroids by size, intensity, and hazardous status
+- Display NASA's Image of the Day
+- Link to NASA's Small-Body Database Lookup for 3D visualization (Note: Embedding via iframe is not supported by [NASA's website](https://ssd.jpl.nasa.gov/t))
 
 ## Planned Features
-- Visualization of the asteroids along earth using THREE.js lib for selected date.
 
-
+- Visualize asteroid trajectories relative to Earth using THREE.js for a selected date range.
