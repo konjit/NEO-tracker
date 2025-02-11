@@ -9,7 +9,6 @@ export const countPotentiallyHazardousAsteroids = (neos) => {
       }
     });
   }
-
   return countHazardousAsteroids;
 };
 
@@ -25,26 +24,26 @@ export const potentiallyHazardousAsteroids = (neos) => {
 
   return hazardousAsteroids;
 };
+
+export const firstHazardous = (asteroids) => {
+  asteroids.sort((asteroid1, asteroid2) => {
+    return (
+      asteroid2.is_potentially_hazardous_asteroid -
+      asteroid1.is_potentially_hazardous_asteroid
+    );
+  });
+  return asteroids;
+};
 export const sortNEOByBrightness = (asteroids) => {
   asteroids.sort((asteroid1, asteroid2) => {
-    return asteroid1.absolute_magnitude_h - asteroid2.absolute_magnitude_h;
+    return asteroid2.absolute_magnitude_h - asteroid1.absolute_magnitude_h;
   });
   return asteroids;
 };
 
 export const sortNEOBySize = (asteroids) => {
   asteroids.sort((asteroid1, asteroid2) => {
-    const size1 = Math.floor(
-      (asteroid1.estimated_diameter.meters.estimated_diameter_max +
-        asteroid1.estimated_diameter.meters.estimated_diameter_min) /
-        2
-    ).toFixed(2);
-    const size2 = Math.floor(
-      (asteroid2.estimated_diameter.meters.estimated_diameter_max +
-        asteroid2.estimated_diameter.meters.estimated_diameter_min) /
-        2
-    ).toFixed(2);
-    return size1 - size2;
+    return getDiameter(asteroid1) - getDiameter(asteroid2);
   });
 
   return asteroids;
@@ -56,4 +55,17 @@ export const getDiameter = (neo) => {
       neo.estimated_diameter.meters.estimated_diameter_min) /
       2
   ).toFixed(2);
+};
+
+export const filterAsteroids = (data, query) => {
+  const results = [];
+
+  const regex = new RegExp(query, "i");
+  for (const [_, values] of Object.entries(data.near_earth_objects)) {
+    values.forEach((value) => {
+      if (regex.test(value.name)) results.push(value);
+    });
+  }
+
+  return results;
 };

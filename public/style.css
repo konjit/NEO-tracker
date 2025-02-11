@@ -25,7 +25,7 @@
   margin: 0px;
   box-sizing: border-box;
   font-size: 16px;
-  font-family: Impact, Haettenschweiler, "Arial Narrow Bold", sans-serif;
+  font-family: Verdana, Geneva, Tahoma, sans-serif
 }
 
 html {
@@ -41,16 +41,16 @@ body {
 #app {
   margin: 0rem 10rem;
   flex: 1;
+
   transition: all 0.3s ease;
 }
-.navbar-links.show-links {
-  display: flex;
-}
+
 #neo-section {
   width: 100%;
 }
 /* Tha main container of asteroids */
 .neo-main-parent-container {
+  margin-top: 0rem;
   display: grid;
   width: 100%;
   grid-template-columns: 1.75fr 1.25fr;
@@ -71,23 +71,26 @@ body {
 
 .neos-info strong {
   color: var(--accent-color);
-  font-size: 1.3rem;
+  font-size: 1.5rem;
 }
 
 .count {
-  font-size: 1.5rem;
+  font-size: 1.3rem;
   font-weight: bold;
   color: var(--danger-color);
 }
+
 .neo-general-info {
   grid-column: 1 / -1;
   color: var(--text-color);
   font-size: 1.2rem;
-  padding: 1rem;
+  padding: 0.5rem;
   letter-spacing: var(--default-letter-spacing);
   text-align: center;
   background-color: var(--bg-color);
   border-radius: var(--default-border-size);
+  border-top-right-radius: 0rem;
+  border-top-left-radius: 0rem;
 }
 
 /* Loader style */
@@ -120,10 +123,10 @@ body {
 
 /* Grid of cards styling for the asteroids */
 #card-container {
-  grid-column: 1 / 2;
+  /* grid-column: 1 / 2; */
   display: flex;
   flex-wrap: wrap;
-  gap: 1.5rem;
+  gap: 1rem;
   padding: 0;
   color: var(--text-color);
   transition: all 0.3s ease;
@@ -131,22 +134,24 @@ body {
 .card {
   text-align: center;
   padding: 1rem;
-  max-width: 40rem;
+  min-width: 15rem;
+  
   background-color: var(--bg-color);
   border-radius: 1rem;
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
   color: var(--text-color);
   display: flex;
-  flex-grow: 1;
+  max-height: 20rem;
   flex-direction: column;
   border-radius: var(--default-border-size);
   height: auto;
   font-size: 1.2rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
+  flex: 1;
 }
 
 .card-heading {
-  font-size: 1.8rem;
+  font-size: 1.4rem;
   color: var(--heading-text-color);
   margin-bottom: 1rem;
 }
@@ -170,8 +175,13 @@ body {
 .card:active {
   transform: scale(1);
 }
-
-.selected {
+.hazardous-asteroid {
+  background-color: rgb(206, 107, 107, 0.4);
+}
+.hazardous-asteroid .card-heading {
+  color: var(--text-color);
+}
+.selected:not(.hazardous-asteroid) {
   background-color: var(--card-selected-color);
 }
 .selected .card-heading {
@@ -183,11 +193,10 @@ body {
   grid-column: 2 / 3;
 }
 /* Detailed NEO Info card */
-
 .neo-info-card {
   padding: 1rem;
   max-height: 80rem;
-  min-width: 20rem;
+
   background-color: var(--card-selected-color);
   border-radius: var(--default-border-size);
   color: var(--text-color);
@@ -261,11 +270,15 @@ body {
   background-color: var(--bg-alt-color);
 }
 
+.navbar-links.show-links {
+  display: flex;
+}
+
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 2rem 15rem;
+  padding: 2rem 10rem;
   height: 4rem;
   background-color: var(--bg-alt-color);
 }
@@ -367,7 +380,7 @@ body {
   font-size: 1rem;
   border: 1px solid rgba(76, 113, 126, 0.7);
   border-radius: var(--default-border-size);
-  width: 60%;
+  width: 100%;
 }
 
 .input-element:focus {
@@ -375,22 +388,7 @@ body {
   border-color: rgba(76, 113, 126, 1);
 }
 
-.search-icon {
-  font-size: 1.2rem;
-  color: rgba(76, 113, 126, 0.7);
-  cursor: pointer;
-}
-
-.search-input:focus {
-  outline: none;
-  border-color: rgba(76, 113, 126, 1);
-}
-
-.search-icon:hover {
-  color: rgba(76, 113, 126, 1);
-}
-
-.input-container {
+.intro-container {
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -438,17 +436,7 @@ option:hover {
 .input-element:hover {
   background-color: var(--bg-hover-color);
 }
-/* Error handling style */
-.error-heading {
-  font-size: 1.5rem;
-  color: var(--error-text-color);
-}
 
-/* Sections */
-#vis-section {
-  margin-bottom: 1rem;
-  background-color: var(--bg-color);
-}
 
 /* Welcome info container */
 .welcome-container p {
@@ -459,16 +447,10 @@ option:hover {
   color: var(--heading-text-color);
   margin-top: 1rem;
 }
-
-.welcome-text {
-  font-size: 1.2rem;
-  line-height: 1.6;
-  color: #333;
-}
-
 /* Image Styling  */
-#date-container {
-  display: flex;
+.date-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
   background-color: var(--bg-color);
   border-radius: var(--default-border-size);
   justify-content: space-between;
@@ -476,9 +458,16 @@ option:hover {
   padding: 1rem;
   gap: 1rem;
   transition: all 0.3s ease;
+  border-bottom-right-radius: 0rem;
+  border-bottom-left-radius: 0rem;
 }
-#date-container input {
-  cursor: text;
+
+.date-container .input-element {
+  width: 100%;
+}
+
+#search-input {
+  grid-column: span 3;
 }
 #img-container {
   display: flex;
@@ -492,9 +481,11 @@ option:hover {
   line-height: 1.6rem;
   margin: 1rem 0rem;
 }
+
 img {
   flex: 1;
 }
+
 #image-container {
   position: relative;
   overflow: hidden;
@@ -540,7 +531,6 @@ img {
 }
 
 /* Tooltip styling */
-
 .tip {
   position: relative;
   display: inline-block;
@@ -564,9 +554,22 @@ img {
 .tip:hover .tip-info {
   visibility: visible;
 }
+/* Error handling style */
+.error-heading {
+  font-size: 1.5rem;
+  color: var(--error-text-color);
+}
+
+.no-results-message {
+  text-align: center;
+  font-size: 1.5rem;
+  padding: 2rem;
+  border-radius: var(--default-border-size);
+  background-color: rgba(255, 77, 77, 0.1);
+}
 
 /* Footer */
-#footer {
+footer {
   background-color: var(--bg-color);
   height: 4rem;
   color: var(--heading-text-color);
@@ -585,7 +588,6 @@ img {
   }
   .navbar-links {
     display: none;
-
     flex-direction: column;
     position: absolute;
     top: 60px;
@@ -620,30 +622,32 @@ img {
     width: 90%;
   }
 }
+
 @media (min-width: 300px) and (max-width: 772px) {
   #app {
     margin: 0rem 1rem;
   }
 
-  #date-container {
+  .date-container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     margin-bottom: 1rem;
   }
-  #date-container > input {
+  .date-container > input {
     width: 100%;
   }
-  #date-container > select {
+  .date-container > select {
     width: 100%;
   }
+
   #search-input {
-    width: 90%;
+    width: 100%;
   }
   #info-container {
     width: 100%;
   }
-  .input-container {
+  .intro-container {
     margin: 0rem auto;
     margin-bottom: 1rem;
     width: 100%;
@@ -658,10 +662,8 @@ img {
   .card-container {
     grid-column: 1 / -1;
   }
-  .neo-general-info {
-    grid-column: 1 / -1;
-  }
 }
+
 @media (min-width: 772px) and (max-width: 1199.98px) {
   #app {
     margin: 0rem 4rem;
@@ -670,17 +672,18 @@ img {
     width: 100%;
   }
   #search-input {
-    width: 90%;
+    width: 100%;
   }
 }
+
 @media (min-width: 1200px) and (max-width: 1399.98px) {
   #app {
-    margin: 0rem 10rem;
+    margin: 0rem 12rem;
   }
 }
 
 @media (min-width: 1400px) {
   #app {
-    margin: 0rem 15rem;
+    margin: 0rem 12rem;
   }
 }

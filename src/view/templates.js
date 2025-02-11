@@ -1,29 +1,25 @@
 import {
-  FOOTER_ID,
   HEADER_ID,
   CARD_CONTAINER_ID,
-  DATE_CONTAINER_ID,
   BTN_CONTAINER_ID,
   NEO_SECTION_ID,
   INFO_CONTAINER,
-  VIS_SECTION_ID,
   TO_TOP_BTN_ID,
   IMG_CONTAINER,
   IMG_SECTION_ID,
   END_DATE_ID,
   START_DATE_ID,
-} from "./constants.js";
+  SELECTOR_ID,
+} from "../constants.js";
 
 import {
   createDateInput,
-  createComboboxView,
-  createDivElement,
   createButtonElement,
-} from "./componentView.js";
+  createInputElement,
+} from "./components.js";
 
 export const createFooterView = () => {
   const element = document.createElement("footer");
-  element.id = FOOTER_ID;
 
   const copyrightText = document.createElement("p");
   copyrightText.textContent = "© 2025 All Rights Reserved.";
@@ -38,8 +34,8 @@ export const createNeoSectionView = () => {
   const neoSection = document.createElement("section");
   neoSection.id = NEO_SECTION_ID;
 
-  const dateContainer = createDivElement();
-  dateContainer.id = DATE_CONTAINER_ID;
+  const dateContainer = document.createElement("div");
+  dateContainer.classList.add("date-container");
   const dateEl = createDateInput();
   dateEl.id = START_DATE_ID;
 
@@ -47,45 +43,70 @@ export const createNeoSectionView = () => {
   dateEndEl.id = END_DATE_ID;
 
   const comboBox = createComboboxView();
+  const searchBar = createInputElement();
+  //searchBar.classList.add("neo-general-info");
 
   dateContainer.appendChild(dateEl);
   dateContainer.appendChild(dateEndEl);
   dateContainer.appendChild(comboBox);
+  dateContainer.appendChild(searchBar);
 
   neoSection.appendChild(dateContainer);
 
   // NEO Cards
-  const cardContainer = createDivElement();
+  const cardContainer = document.createElement("div");
   cardContainer.id = CARD_CONTAINER_ID;
 
-  const infoContainer = createDivElement();
+  const infoContainer = document.createElement("div");
   infoContainer.id = INFO_CONTAINER;
 
-  const mainContainer = createDivElement();
+  const mainContainer = document.createElement("div");
   mainContainer.classList.add("neo-main-parent-container");
 
   mainContainer.appendChild(cardContainer);
   mainContainer.appendChild(infoContainer);
   neoSection.appendChild(mainContainer);
-  const btnContainer = createDivElement();
+
+  const btnContainer = document.createElement("div");
   btnContainer.id = BTN_CONTAINER_ID;
   neoSection.appendChild(btnContainer);
+
   return neoSection;
 };
 
-export const createCardElement = () => {
-  const card = createDivElement();
-  card.classList.add("card");
-  const cardHeader = createDivElement();
-  cardHeader.classList.add("card-header");
-  const cardBody = createDivElement();
-  cardBody.classList.add("card-body");
+export const createInputView = () => {
+  const container = document.createElement("div");
+  container.classList.add("intro-container");
+  const dateInput = createDateInput();
+  const combobox = createComboboxView();
 
-  card.appendChild(cardHeader);
-  card.appendChild(cardBody);
+  container.appendChild(heading);
+  container.appendChild(dateInput);
+  container.appendChild(combobox);
 
-  return card;
+  return container;
 };
+
+export const createComboboxView = () => {
+  const selectEl = document.createElement("select");
+  selectEl.id = SELECTOR_ID;
+  selectEl.classList.add("input-element");
+
+  const options = [
+    { value: "size", text: "Sort By Size" },
+    { value: "brightness", text: "Sort By Intensity" },
+    { value: "hazardous", text: "First Hazardous" },
+  ];
+  options.forEach((option) => {
+    const optionEl = document.createElement("option");
+    optionEl.value = option.value;
+    optionEl.innerText = option.text;
+    selectEl.appendChild(optionEl);
+  });
+
+  return selectEl;
+};
+
 export const createHeaderView = () => {
   const element = document.createElement("header");
   element.id = HEADER_ID;
@@ -107,11 +128,6 @@ export const createHeaderView = () => {
   link1.classList.add("navbar-link");
   link1.innerText = "Asteroids";
 
-  const link3 = document.createElement("a");
-  link3.href = VIS_SECTION_ID;
-  link3.classList.add("navbar-link");
-  link3.innerText = "Visualization";
-
   const link2 = document.createElement("a");
   link2.href = IMG_SECTION_ID;
   link2.classList.add("navbar-link");
@@ -119,8 +135,8 @@ export const createHeaderView = () => {
 
   const linkContainer = document.createElement("div");
   linkContainer.classList.add("navbar-links");
+
   linkContainer.appendChild(link1);
-  linkContainer.appendChild(link3);
   linkContainer.appendChild(link2);
 
   navContainer.appendChild(brand);
@@ -136,28 +152,27 @@ export const createHeaderView = () => {
   return element;
 };
 
+export const createWelcomeMessage = (start, end, count, hazardous) => {
+  return `
+      Between <strong>${start}</strong> and <strong>${end}</strong>, there are 
+      <span class="count">${count}</span> asteroids flying by. 
+      There could be in total <span class="count">${hazardous}</span> potentially hazardous asteroid(s).
+      Use the search bar, the date picker and the options below to find specific asteroids 
+      by name or filter by their potential danger. Additionally, you can view image of the day 
+      provided by NASA.
+    `;
+}
+
 export const createImgSectionView = () => {
   const imgSection = document.createElement("section");
   imgSection.id = IMG_SECTION_ID;
-  const imgContainer = createDivElement();
+  const imgContainer = document.createElement("div");
   imgContainer.id = IMG_CONTAINER;
 
   imgSection.appendChild(imgContainer);
 
   return imgSection;
 };
-
-export const createVisualizationSectionView = () => {
-  const visSection = document.createElement("section");
-  visSection.id = VIS_SECTION_ID;
-  const visContainer = createDivElement();
-
-  visContainer.style.width = "1000px";
-  visContainer.style.height = "700px";
-  visSection.appendChild(visContainer);
-  return visSection;
-};
-
 export const topBtnView = () => {
   const topBtn = createButtonElement();
   topBtn.id = TO_TOP_BTN_ID;

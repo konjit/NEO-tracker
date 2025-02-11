@@ -7,9 +7,9 @@
  ** https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${API_KEY}`
  */
 
-import { API_KEY } from "../config.js";
-import { START_DATE_ID } from "./constants.js";
-import { isWithinRange } from "./utils.js";
+import { API_KEY } from "../../config.js";
+import { START_DATE_ID, TIMEOUT } from "../constants.js";
+import { isWithinRange } from "../utils.js";
 
 // The main function the fetch data from the specified END_POINT and returns JSON or BLOB objects
 // It handles network error  if for example the server is not reachable for the set timeout
@@ -17,10 +17,18 @@ import { isWithinRange } from "./utils.js";
 
 // By default a fetch() request timeouts at the time indicated by the browser.
 // In Chrome a network request timeouts at 300 seconds, while in Firefox at 90 seconds.
+// I add a time out in case the server did not respond or is unreachable before the default of 
+// Chrome or Firefox
 
-const fetchData = async (END_POINT) => {
+const fetchData = async (END_POINT, timeout) => {
+
+  const promise = new Promise((_, reject) => {
+    setTimeout(() => reject(new Error("Request timed out")), timeout);
+  });
+
   try {
-    const response = await fetch(END_POINT);
+    const response = await Promise.race([fetch(END_POINT), promise]);
+
     if (!response.ok) {
       throw new Error(`HTTP Error: ${response.statusText}`);
     }
@@ -41,7 +49,7 @@ const fetchData = async (END_POINT) => {
   } catch (error) {
     return {
       error: true,
-      message: `Network error has occurred ${error.message}.`,
+      message: `Network error occurred: ${error.message}.`,
     };
   }
 };
@@ -49,9 +57,10 @@ const fetchData = async (END_POINT) => {
 // For a list of NEOs with no orbital data
 export const fetchNEOs = async () => {
   const END_POINT = `https://api.nasa.gov/neo/rest/v1/feed?api_key=${API_KEY}`;
+
   // For testing purpose
   const WRONG_END_POINT = `https://api.nasa.gov/neo/rest/v1/fed?api_key=${API_KEY}`;
-  const data = await fetchData(END_POINT);
+  const data = await fetchData(END_POINT, TIMEOUT);
 
   if (data.error) {
     return { error: true, message: data.message };
@@ -63,7 +72,8 @@ export const fetchNEOs = async () => {
 // After we receive info like the NEO's id from the fetchNEOs function.
 export const fetchDetailedNEOData = async (neoReferenceID) => {
   const END_POINT = `https://api.nasa.gov/neo/rest/v1/neo/${neoReferenceID}?api_key=${API_KEY}`;
-  const data = await fetchData(END_POINT);
+  const data = await fetchData(END_POINT, TIMEOUT);
+
   if (data.error) {
     return { error: true, message: data.message };
   }
@@ -80,7 +90,7 @@ export const browseNEOs = async (startDate, endDate) => {
 // Fetch image of data from NASA img of the day
 export const fetchImageOfTheDay = async () => {
   const END_POINT = `https://api.nasa.gov/planetary/apod?api_key=${API_KEY}`;
-  const imgData = await fetchData(END_POINT);
+  const imgData = await fetchData(END_POINT, TIMEOUT);
   if (imgData.error) {
     return { error: true, message: imgData.message };
   }
@@ -105,7 +115,6 @@ export const filterDateRangeNEOs = async (startDate, endDate) => {
 export const filterNEOs = async () => {
   const date = document.getElementById(START_DATE_ID).value;
   const noes = await fetchNEOs();
-
   if (noes.error) {
     return { error: true, message: noes.message };
   }
@@ -127,7 +136,6 @@ export const filteredBy = async (input) => {
     const matchingNEOs = values.filter((neo) =>
       Object.values(neo).some((val) => val.toString().includes(input.trim()))
     );
-
     neosByInput.push(...matchingNEOs);
   }
   return neosByInput;

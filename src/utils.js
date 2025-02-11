@@ -1,7 +1,8 @@
-//Converts  Date object to a string in ISO 8601 format (YYYY-MM-DDTHH:MM:SS.sssZ).
-export const getTodayDate = () => {
+
+export const getDateAfterDays = (days) => {
   const today = new Date();
-  return today.toISOString().split("T")[0];
+  today.setDate(today.getDate() + days);  
+  return today.toISOString().split("T")[0];  
 };
 
 export const convertDateFormat = (date) => {
