@@ -216,7 +216,7 @@ export const getImageOfTheDay = async (imgVideoContainer) => {
   const imgData = await fetchImageOfTheDay();
   if (imgData.error) {
     imgVideoContainer.innerHTML = `<h1 class='error-heading'>${imgData.message}</h1>`;
-    console.log('image of the day')
+
   }
 
   const descriptionContainer = document.createElement("div");
