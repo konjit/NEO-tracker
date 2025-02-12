@@ -53,7 +53,7 @@ body {
   margin-top: 0rem;
   display: grid;
   width: 100%;
-  grid-template-columns: 1.5fr 1.7fr;
+  grid-template-columns: 1.75fr 1.25fr;
   gap: 2rem;
   transition: all 0.3s ease;
 }
