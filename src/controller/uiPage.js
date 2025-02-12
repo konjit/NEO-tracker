@@ -214,7 +214,6 @@ export const displayNEOs = (noes) => {
 export const getImageOfTheDay = async (imgVideoContainer) => {
   imgVideoContainer.innerHTML = "";
   const imgData = await fetchImageOfTheDay();
-  console.log(imgData);
   if (imgData.error) {
     imgVideoContainer.innerHTML = `<h1 class='error-heading'>${imgData.message}</h1>`;
     console.log('image of the day')
