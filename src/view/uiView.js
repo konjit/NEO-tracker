@@ -3,6 +3,10 @@ import { createCardElement } from "../view/components.js";
 import { getDiameter } from "../helpers/helper.js";
 import { convertDateFormat } from "../utils.js"
 
+/* Displays basic info for each asteroid  
+** Clicking on an asteroid reveals detailed information in another card  
+*/  
+
 export const createAsteroidCard = (currentNEOs, cardContainer) => {
   currentNEOs.forEach((neo) => {
     const approachDate = neo.close_approach_data[0].close_approach_date;
@@ -11,7 +15,7 @@ export const createAsteroidCard = (currentNEOs, cardContainer) => {
 
     const isHazardous = neo.is_potentially_hazardous_asteroid;
     if (isHazardous) card.classList.add("hazardous-asteroid");
-
+    const isHazardousText = neo.is_potentially_hazardous_asteroid ? "Yes" : "No";
     card.innerHTML = `
         <div class="card-container">
           <h3 class="card-heading">${neo.name}</h3>
@@ -19,7 +23,7 @@ export const createAsteroidCard = (currentNEOs, cardContainer) => {
           <p><strong>Approach Date:</strong> ${approachDate} </p></br>
           <p><strong>Size:</strong> ${getDiameter(neo)} m</p></br>
           <p><strong>Intensity:</strong> ${neo.absolute_magnitude_h} m</p></br>
-          <p><strong>Hazardous:</strong> ${isHazardous ? "Yes" : "No"}</p>
+           <p><strong>Is Hazardous?</strong> ${isHazardousText} m</p></br>
           </div>
         </div>
       `;
@@ -28,6 +32,10 @@ export const createAsteroidCard = (currentNEOs, cardContainer) => {
   });
 };
 
+/* The next two function getDetailedComponent and getOrbitalData displays detailed 
+** info for each asteroid  Since this includes detailed data, a tooltip is provided 
+** for each property  
+*/  
 export const getDetailedComponent = (neo, detailedNEOInfoCard) => {
 
   const approachDate = neo.close_approach_data[0].close_approach_date;
@@ -68,7 +76,7 @@ export const getDetailedComponent = (neo, detailedNEOInfoCard) => {
           ${orbitalData}
           <p><a href="${
             neo.nasa_jpl_url
-          }" target="_blank" class="view-more">View More</a></p>
+          }&view=VOP" target="_blank" class="view-more">View More</a></p>
         </div>
       </div>
     `;

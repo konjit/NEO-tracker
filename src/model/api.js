@@ -59,9 +59,9 @@ export const fetchNEOs = async () => {
   const END_POINT = `https://api.nasa.gov/neo/rest/v1/feed?api_key=${API_KEY}`;
 
   // For testing purpose
-  const WRONG_END_POINT = `https://api.nasa.gov/neo/rest/v1/fed?api_key=${API_KEY}`;
+  const WRONG_END_POINT = `https://api.nasa.gov/neo/redfdfst/v1/fed?api_key=${API_KEY}`;
   const data = await fetchData(END_POINT, TIMEOUT);
-
+  console.log(data);
   if (data.error) {
     return { error: true, message: data.message };
   }
