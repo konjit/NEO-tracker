@@ -113,10 +113,10 @@ body {
   color: var(--text-color);
   display: flex;
   flex-direction: column;
-  height: auto;
   font-size: 1.1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex: 1;
+  max-height: 15rem;
 }
 
 .card-heading {
