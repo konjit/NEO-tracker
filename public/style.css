@@ -41,19 +41,19 @@ body {
 #app {
   margin: 0rem 10rem;
   flex: 1;
-
   transition: all 0.3s ease;
 }
 
 #neo-section {
   width: 100%;
 }
+
 /* Tha main container of asteroids */
 .neo-main-parent-container {
   margin-top: 0rem;
   display: grid;
   width: 100%;
-  grid-template-columns: 1.75fr 1.25fr;
+  grid-template-columns: 1.5fr 1.7fr;
   gap: 2rem;
   transition: all 0.3s ease;
 }
@@ -93,34 +93,6 @@ body {
   border-top-left-radius: 0rem;
 }
 
-/* Loader style */
-.loading-spinner {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  min-height: 50px;
-}
-
-.spinner {
-  width: 2rem;
-  height: 2rem;
-  border: 4px solid #ddd;
-  border-top: 4px solid var(--bg-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  0% {
-    transform: rotate(0deg);
-  }
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 /* Grid of cards styling for the asteroids */
 #card-container {
   /* grid-column: 1 / 2; */
@@ -133,34 +105,29 @@ body {
 }
 .card {
   text-align: center;
-  padding: 1rem;
+  padding: .5rem;
   min-width: 15rem;
-  
   background-color: var(--bg-color);
-  border-radius: 1rem;
+  border-radius: var(--default-border-size);
   box-shadow: 0 0.2rem 0.5rem rgba(0, 0, 0, 0.1);
   color: var(--text-color);
   display: flex;
-  max-height: 20rem;
   flex-direction: column;
-  border-radius: var(--default-border-size);
-  height: auto;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
   flex: 1;
+  max-height: 15rem;
 }
 
 .card-heading {
   font-size: 1.4rem;
   color: var(--heading-text-color);
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
 }
 
 .card-body p {
   font-size: 1rem;
-  line-height: 1.6;
   color: var(--text-color);
-  margin-bottom: 0.5rem;
 }
 
 .hazardous {
@@ -437,7 +404,6 @@ option:hover {
   background-color: var(--bg-hover-color);
 }
 
-
 /* Welcome info container */
 .welcome-container p {
   color: var(--text-color);
@@ -529,7 +495,47 @@ img {
   height: auto;
   display: block;
 }
+.video-wrapper{
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9; 
+  margin: auto; 
+}
 
+.video-wrapper iframe {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border: none;
+}
+
+/* Loader style */
+.loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  min-height: 50px;
+}
+
+.spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 4px solid #ddd;
+  border-top: 4px solid var(--bg-color);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 /* Tooltip styling */
 .tip {
   position: relative;

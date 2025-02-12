@@ -36,7 +36,6 @@ import {
   setupEventListener,
   dateEventHandler,
   selectEventHandler,
-  showHideIntroSection,
 } from "../eventHandlers.js";
 
 import { createAsteroidCard, getDetailedComponent } from "../view/uiView.js";
@@ -69,10 +68,13 @@ export const initPage = () => {
   /* Event listeners */
   setupEventListener();
   dateEventHandler();
-
   getAsteroids();
- 
+  selectEventHandler();
 };
+
+/* Intro section of the page  
+** A hero section could have been used, but time was limited  
+*/  
 
 export const initWelcomeSection = async () => {
   const welcomeContainer = document.createElement("div");
@@ -161,7 +163,10 @@ export const displayDetailedInfo = async (neoReferenceID) => {
   getDetailedComponent(neo, detailedNEOInfoCard);
 };
 
-// Display asteroids in card view (6 per page if above uses pagination)
+/* Display asteroids in a card view  
+** Shows up to 6 per page with pagination if there are more  
+*/  
+
 export const displayNEOs = (noes) => {
   window.currentPage = 1;
   const cardContainer = document.getElementById(CARD_CONTAINER_ID);
@@ -202,13 +207,17 @@ export const displayNEOs = (noes) => {
   displayPage(window.currentPage);
 };
 
-// Image of the day functions
-export const getImageOfTheDay = async (imgContainer) => {
-  imgContainer.innerHTML = "";
+/*             Handles NASA's Image of the Day 
+** The API response includes a 'media_type' property, which can be 'image' or 'video'.  
+** This function ensures proper handling and display of both media types.  
+*/  
+export const getImageOfTheDay = async (imgVideoContainer) => {
+  imgVideoContainer.innerHTML = "";
   const imgData = await fetchImageOfTheDay();
-
+  console.log(imgData);
   if (imgData.error) {
-    imgContainer.innerHTML = `<h1 class='error-heading'>${todayNEOs.message}</h1>`;
+    imgVideoContainer.innerHTML = `<h1 class='error-heading'>${imgData.message}</h1>`;
+    console.log('image of the day')
   }
 
   const descriptionContainer = document.createElement("div");
@@ -225,16 +234,29 @@ export const getImageOfTheDay = async (imgContainer) => {
   descriptionContainer.appendChild(heading);
   descriptionContainer.appendChild(explanation);
 
-  const imgWrapper = document.createElement("div");
-  imgWrapper.classList.add("image-wrapper");
+  const imgVideoWrapper = document.createElement("div");
 
-  const img = document.createElement("img");
-  img.id = IMG_DAY_ID;
-  img.src = imgData.hdurl;
-  img.alt = imgData.title;
-  img.classList.add("image-of-the-day");
-  imgWrapper.appendChild(img);
+  if(imgData.media_type === 'image'){
+    imgVideoWrapper.classList.add("image-wrapper");
 
-  imgContainer.appendChild(descriptionContainer);
-  imgContainer.appendChild(imgWrapper);
+    const img = document.createElement("img");
+    img.id = IMG_DAY_ID;
+    img.src = imgData.hdurl;
+    img.alt = imgData.title;
+    img.classList.add("image-of-the-day");
+    imgVideoWrapper.appendChild(img);
+  
+  }
+  else if(imgData.media_type === "video"){
+    imgVideoWrapper.classList.add("video-wrapper");
+
+    const iframe = document.createElement("iframe");
+    iframe.id = IMG_DAY_ID;
+    iframe.src = imgData.url;
+    iframe.alt = imgData.title;
+  
+    imgVideoWrapper.appendChild(iframe);
+  }
+  imgVideoContainer.appendChild(descriptionContainer);
+  imgVideoContainer.appendChild(imgVideoWrapper);
 };
