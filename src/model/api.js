@@ -61,7 +61,6 @@ export const fetchNEOs = async () => {
   // For testing purpose
   const WRONG_END_POINT = `https://api.nasa.gov/neo/redfdfst/v1/fed?api_key=${API_KEY}`;
   const data = await fetchData(END_POINT, TIMEOUT);
-  console.log(data);
   if (data.error) {
     return { error: true, message: data.message };
   }
@@ -84,7 +83,7 @@ export const browseNEOs = async (startDate, endDate) => {
   const response = await fetch(
     `https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=${API_KEY}`
   );
-  console.log(response);
+  
 };
 
 // Fetch image of data from NASA img of the day
